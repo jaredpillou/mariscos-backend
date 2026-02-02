@@ -1,6 +1,7 @@
 
 package com.mariscos.Proyecto_DW_mariscos.Entidades;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,9 +23,12 @@ public class Platillo {
     
     private String nombre;
     private Double precio;      // Requisito clave: Precio de mercado 
-    private String categoria;   // Entradas, Fuertes, etc. [cite: 127]
-    private Boolean disponible; // Para marcar "Agotado" [cite: 124]
+    private String categoria;   // Entradas, Fuertes, etc.
+    private Boolean disponible; // Para marcar "Agotado" 
+    @Column(name = "imagen_url") 
+    private String imagenUrl;
 
+    
     public Platillo() {
     }
 
@@ -34,6 +38,7 @@ public class Platillo {
         this.precio = precio;
         this.categoria = categoria;
         this.disponible = disponible;
+        this.imagenUrl = imagenUrl;
     }
 
     public Long getId() {
@@ -77,7 +82,8 @@ public class Platillo {
     }
     
     
-    
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
     
     
 }
