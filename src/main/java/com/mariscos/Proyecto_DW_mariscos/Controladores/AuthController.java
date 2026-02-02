@@ -18,23 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*") // Permite peticiones desde cualquier lado
+@CrossOrigin(origins = "*") 
 public class AuthController {
+
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    // Endpoint para Login
+    // ✅ CORRECCIÓN 1: Agregamos "/usuarios" para que coincida con Angular
+    @PostMapping("/usuarios/login") 
     public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
         
-        // 👇 CAMBIO 2: Leemos 'nombre' y 'contrasena' (como los envía Angular)
+        // ✅ CORRECCIÓN 2: Leemos 'nombre' y 'contrasena' (como los envía Angular)
         String user = credenciales.get("nombre");
         String pass = credenciales.get("contrasena");
 
-        // Buscamos en la base de datos
+        // Buscamos en la BD
+        // NOTA: Si tu repositorio usa 'findByNombreAndContrasena', cambia el nombre aquí abajo 👇
         Usuario usuarioEncontrado = usuarioRepositorio.findByUsernameAndPassword(user, pass);
 
         if (usuarioEncontrado != null) {
-            // 👇 CAMBIO 3: Devolvemos EL USUARIO COMPLETO (con rol), no solo un mensaje
+            // ✅ CORRECCIÓN 3: Devolvemos EL USUARIO COMPLETO (¡Esto permite saber si es Admin!)
             return ResponseEntity.ok(usuarioEncontrado);
         } else {
             return ResponseEntity.status(401).body(Collections.singletonMap("mensaje", "Credenciales incorrectas"));
