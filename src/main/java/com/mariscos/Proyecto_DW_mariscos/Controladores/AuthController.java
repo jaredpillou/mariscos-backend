@@ -6,6 +6,7 @@ package com.mariscos.Proyecto_DW_mariscos.Controladores;
 
 import com.mariscos.Proyecto_DW_mariscos.Entidades.Usuario;
 import com.mariscos.Proyecto_DW_mariscos.Repositorios.UsuarioRepositorio;
+import java.util.Collections;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,18 +24,20 @@ public class AuthController {
     private UsuarioRepositorio usuarioRepositorio;
 
     // Endpoint para Login
-    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
-        String user = credenciales.get("username");
-        String pass = credenciales.get("password");
+        
+        // 👇 CAMBIO 2: Leemos 'nombre' y 'contrasena' (como los envía Angular)
+        String user = credenciales.get("nombre");
+        String pass = credenciales.get("contrasena");
 
         // Buscamos en la base de datos
         Usuario usuarioEncontrado = usuarioRepositorio.findByUsernameAndPassword(user, pass);
 
         if (usuarioEncontrado != null) {
-            return ResponseEntity.ok().body("{\"mensaje\": \"Login exitoso\"}");
+            // 👇 CAMBIO 3: Devolvemos EL USUARIO COMPLETO (con rol), no solo un mensaje
+            return ResponseEntity.ok(usuarioEncontrado);
         } else {
-            return ResponseEntity.status(401).body("{\"mensaje\": \"Credenciales incorrectas\"}");
+            return ResponseEntity.status(401).body(Collections.singletonMap("mensaje", "Credenciales incorrectas"));
         }
     }
 }
