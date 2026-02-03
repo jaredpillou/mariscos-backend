@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long>{
-    // Método mágico: Spring crea la consulta SQL automáticamente al leer el nombre
+
     Usuario findByUsernameAndPassword(String username, String password);
     
-    // Para verificar si existe antes de crear
+
     Usuario findByUsername(String username);
 }

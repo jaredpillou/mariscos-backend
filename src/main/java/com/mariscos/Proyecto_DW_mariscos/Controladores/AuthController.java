@@ -24,20 +24,18 @@ public class AuthController {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    // ✅ CORRECCIÓN 1: Agregamos "/usuarios" para que coincida con Angular
+
     @PostMapping("/usuarios/login") 
     public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
         
-        // ✅ CORRECCIÓN 2: Leemos 'nombre' y 'contrasena' (como los envía Angular)
+    
         String user = credenciales.get("nombre");
         String pass = credenciales.get("contrasena");
 
-        // Buscamos en la BD
-        // NOTA: Si tu repositorio usa 'findByNombreAndContrasena', cambia el nombre aquí abajo 👇
+     
         Usuario usuarioEncontrado = usuarioRepositorio.findByUsernameAndPassword(user, pass);
 
         if (usuarioEncontrado != null) {
-            // ✅ CORRECCIÓN 3: Devolvemos EL USUARIO COMPLETO (¡Esto permite saber si es Admin!)
             return ResponseEntity.ok(usuarioEncontrado);
         } else {
             return ResponseEntity.status(401).body(Collections.singletonMap("mensaje", "Credenciales incorrectas"));

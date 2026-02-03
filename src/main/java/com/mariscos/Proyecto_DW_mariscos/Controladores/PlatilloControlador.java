@@ -1,6 +1,6 @@
 package com.mariscos.Proyecto_DW_mariscos.Controladores;
 
-// IMPORTANTE: Aquí importamos las otras dos carpetas
+
 import com.mariscos.Proyecto_DW_mariscos.Entidades.Platillo;
 import com.mariscos.Proyecto_DW_mariscos.Repositorios.PlatilloRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class PlatilloControlador {
     
     @PutMapping("/{id}")
     public Platillo actualizarPrecio(@PathVariable Long id, @RequestBody Platillo platilloDatos) {
-        // Buscamos el platillo, si no existe devolvemos null
+
         Platillo platilloExistente = repositorio.findById(id).orElse(null);
         
         if (platilloExistente != null) {

@@ -22,9 +22,9 @@ public class Platillo {
     private Long id;
     
     private String nombre;
-    private Double precio;      // Requisito clave: Precio de mercado 
-    private String categoria;   // Entradas, Fuertes, etc.
-    private Boolean disponible; // Para marcar "Agotado" 
+    private Double precio;       
+    private String categoria;   
+    private Boolean disponible; 
     @Column(name = "imagen_url") 
     private String imagenUrl;
 
